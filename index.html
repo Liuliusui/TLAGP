@@ -1,136 +1,121 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="LLM-GGP: Large Language Model Guided Genetic Programming toolkit for LLM-scored subtrees, operators, and fitness shaping.">
+  <meta name="description" content="LLM-GGP: zero-shot LLM-evaluated genetic programming for port scheduling heuristics (CTTS, YCS, CRP) with interpretable trees and DEAP operators.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LLM-GGP | LLM-guided Genetic Programming</title>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <title>LLM-GGP | Toolkit Index</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-
   <style>
     :root {
-      --ink: #0f172a;
-      --muted: #6b7280;
-      --surface: #f6f8fc;
-      --card: #ffffff;
+      --bg: #050913;
+      --panel: #0c172c;
+      --card: #0f1f38;
+      --ink: #e9f0ff;
+      --muted: #9fb0c8;
       --accent: #2ed18a;
-      --accent-dark: #1a9e66;
-      --line: #d7deea;
+      --accent-2: #38bdf8;
+      --line: #1f2d45;
+      --glow: 0 18px 48px rgba(56, 189, 248, 0.25);
     }
-
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Noto Sans', sans-serif;
-      background: var(--surface);
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.09), transparent 26%),
+                  radial-gradient(circle at 85% 15%, rgba(46, 209, 138, 0.12), transparent 22%),
+                  linear-gradient(135deg, #050913 0%, #0a1222 60%, #050913 100%);
       color: var(--ink);
+      min-height: 100vh;
     }
-
-    .title { font-family: 'Google Sans', sans-serif; }
-
-    .hero-llmgp {
-      background: radial-gradient(circle at 20% 20%, rgba(46, 209, 138, 0.15), transparent 25%),
-                  radial-gradient(circle at 80% 10%, rgba(74, 144, 226, 0.12), transparent 22%),
-                  linear-gradient(135deg, #0f172a, #111827);
-      color: #f8fbff;
-    }
-
-    .pill {
-      display: inline-block;
-      padding: 8px 14px;
-      margin: 4px 6px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #f8fbff;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .cta-buttons .button {
-      margin: 6px;
-      font-weight: 600;
-    }
-
-    .card-like {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
-      height: 100%;
-    }
-
-    .card-like h3 {
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--ink);
-    }
-
-    .card-like p {
-      color: var(--muted);
-    }
-
+    a { color: var(--accent-2); }
+    .hero-llmgp { background: transparent; }
+    .eyebrow { letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-size: 0.85rem; }
+    .title, h1, h2, h3, h4 { color: var(--ink); }
     .muted { color: var(--muted); }
-
-    .flow-box {
-      border-left: 4px solid var(--accent);
-      padding: 12px 16px;
-      background: #eef7f0;
-      border-radius: 10px;
-      margin-bottom: 12px;
-    }
-
-    .flow-num {
-      font-weight: 700;
-      margin-right: 8px;
-      color: var(--accent-dark);
-    }
-
-    .code-box {
-      background: #0f172a;
-      color: #e8edf7;
-      border-radius: 12px;
-      padding: 14px 16px;
-      font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 0.95rem;
-      overflow-x: auto;
-      border: 1px solid #1f2937;
-    }
-
-    .section-title { margin-bottom: 8px; }
-    .subtle { font-size: 0.9rem; color: var(--muted); }
-
-    .badge {
+    .chip {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 10px;
-      background: #ecfdf3;
-      color: #166534;
+      gap: 6px;
+      padding: 8px 12px;
+      margin: 4px 4px 4px 0;
+      border-radius: 999px;
+      background: rgba(233, 240, 255, 0.06);
+      border: 1px solid rgba(233, 240, 255, 0.12);
+      font-size: 0.9rem;
+    }
+    .card-surface {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 18px 16px;
+      box-shadow: var(--glow);
+      height: 100%;
+    }
+    .card-surface h3 { font-weight: 700; margin-bottom: 6px; }
+    .section { padding: 56px 20px; }
+    .section-title { margin-bottom: 10px; }
+    .grid-spaced { gap: 18px; }
+    .code-box {
+      background: #0b152a;
+      border: 1px solid #1c2a46;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: 'IBM Plex Mono', 'Fira Code', monospace;
+      color: #dce7ff;
+      font-size: 0.92rem;
+      overflow-x: auto;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 10px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .flow .num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: rgba(46, 209, 138, 0.2);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
       font-weight: 700;
-      margin-right: 10px;
-      margin-top: 4px;
+      border: 1px solid rgba(46, 209, 138, 0.6);
     }
-
-    .compact-list {
-      margin-top: 6px;
-      margin-bottom: 0;
-      padding-left: 18px;
-      color: var(--muted);
-      line-height: 1.6;
+    .flow strong { color: var(--accent-2); }
+    .pill-accent { color: var(--accent); }
+    .hero-cta .button { margin-right: 10px; font-weight: 700; }
+    .tagline { font-size: 1.05rem; color: var(--muted); }
+    .combo-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--glow);
     }
-
+    .combo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+    .subcard {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--glow);
+      height: 100%;
+    }
     footer {
-      background: #0f172a;
-      color: #d7deea;
-      padding: 20px 0;
+      background: #070d18;
+      border-top: 1px solid var(--line);
+      padding: 22px 0;
+      color: var(--muted);
     }
-
-    a.hero-link { color: #d0e8ff; text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -140,39 +125,31 @@
     <div class="container is-max-desktop">
       <div class="columns is-vcentered">
         <div class="column is-7">
-          <h1 class="title is-1 publication-title">
-            <span style="color: var(--accent);">LLM-GGP</span><br>
-            Large Language Model Guided Genetic Programming
-          </h1>
-          <h2 class="subtitle is-4" style="color: #d9e6ff;">
-            LLM-scored subtrees steering crossover, mutation, and fitness shaping for any genetic programming task.
-          </h2>
-          <div class="cta-buttons">
-            <a href="#getting-started" class="button is-light is-rounded">
-              <span class="icon"><i class="fas fa-terminal"></i></span>
-              <span>Get started</span>
-            </a>
-            <a href="#modules" class="button is-link is-rounded">
-              <span class="icon"><i class="fas fa-microchip"></i></span>
-              <span>Modules</span>
-            </a>
+          <p class="eyebrow">Port scheduling / Automated rule design</p>
+          <h1 class="title is-1">LLMGGP: Automated rule design for port scheduling</h1>
+          <p class="tagline">
+            Combine large language models with genetic programming to automatically generate interpretable, deployable scheduling policies for truck dispatching, yard cranes, and container relocation.
+          </p>
+          <div class="hero-cta" style="margin-top: 14px;">
+            <a href="#what-why" class="button is-link is-rounded">Learn the framework</a>
+            <a href="#features" class="button is-light is-rounded">Key features</a>
           </div>
           <div style="margin-top: 14px;">
-            <span class="pill">DEAP + GP</span>
-            <span class="pill">LLM scored subtrees</span>
-            <span class="pill">Composable prompts</span>
-            <span class="pill">Fitness shaping</span>
+            <span class="chip"><i class="fas fa-bolt"></i>LLM content-aware scoring + GP search</span>
+            <span class="chip"><i class="fas fa-layer-group"></i>Supports Various GP </span>
+            <span class="chip"><i class="fas fa-eye"></i>Interpretable expressions</span>
+            <span class="chip"><i class="fas fa-user-shield"></i>Friendly to non-GP experts</span>
+            <span class="chip"><i class="fas fa-graduation-cap"></i>Educational: learn GP & heuristics</span>
           </div>
         </div>
         <div class="column is-5">
-          <div class="card-like">
-            <p class="heading">Quick facts</p>
-            <p class="muted">LLM-GGP lives in <code>llmggp/</code> and ships:</p>
-            <ul class="compact-list">
-              <li>LLM scoring with caching (<code>llmggp/api.py</code>) plus a composable base prompt.</li>
-              <li>LLM-biased crossover and guarded mutation (<code>llmggp/operators.py</code>).</li>
-              <li>Shared base primitives (<code>llmggp/pset_base.py</code>) for your task-specific GP sets.</li>
-              <li>Fitness shaping (<code>llmggp/fitness.py</code>) with <code>DEFAULT_ALPHA=0.2</code>.</li>
+          <div class="card-surface">
+            <p class="eyebrow" style="margin-bottom: 6px;">Framework at a glance</p>
+            <ul class="muted" style="line-height: 1.6; padding-left: 16px;">
+              <li>Unified GP representation + LLM content-aware evaluation, tailored for port scheduling.</li>
+              <li>Hides DEAP/GP internals; high-level <code>gp_run_auto</code> connects task description and cost function directly.</li>
+              <li>Interpretable strategy trees + Python functions, ready for audits and simulation/control integration.</li>
+              <li>Zero labeled data needed: iterate with simulation feedback plus LLM scoring.</li>
             </ul>
           </div>
         </div>
@@ -181,70 +158,29 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="what-why">
   <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3 section-title">What is LLM-GGP?</h2>
-        <div class="content">
-          <p>
-            LLM-GGP is a reusable large-language-model-guided genetic programming toolbox.
-            Subtree semantics scored by an LLM influence crossover, mutation, and fitness shaping to evolve interpretable heuristics for any GP task.
-          </p>
-          <p>
-            Compose your own domain prompt, plug in a task-specific primitive set, and let LLM-scored subtrees steer variation and selection with <code>DEFAULT_K_SELECT=3</code> and <code>DEFAULT_ALPHA=0.2</code>.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title has-text-centered" id="modules">Core modules</h2>
-    <p class="has-text-centered muted" style="margin-bottom: 24px;">Source lives in <code>llmggp/</code>; add your own task modules alongside.</p>
+    <h2 class="title is-3 section-title">What &amp; Why</h2>
     <div class="columns is-multiline">
       <div class="column is-half">
-        <div class="card-like">
-          <h3>LLM scoring pipeline</h3>
-          <p><code>build_llm_client</code> and <code>llm_score_branch</code> call a base prompt (<code>BASE_SYSTEM_PROMPT</code>) that can be extended via <code>compose_system_prompt</code>, returning a 0-1 score per subtree with caching and graceful degradation.</p>
-          <ul class="compact-list">
-            <li>Env vars: <code>LLM_HOST</code> / <code>LLM_API_KEY</code> / <code>LLM_MODEL</code>.</li>
-            <li>No credentials? return 0.0 and keep the run offline-safe.</li>
-            <li>LRU cache up to 5000 entries to avoid duplicate calls.</li>
+        <div class="card-surface">
+          <h3>Pain points</h3>
+          <ul class="muted" style="line-height: 1.6; padding-left: 16px; margin-top: 8px;">
+            <li>Each scheduling task needs bespoke rules; engineering cost is high.</li>
+            <li>Rules rely on experience, lack systematic optimization and explainable upgrades.</li>
+            <li>Switching between CTTS / YCS / CRP often means starting over.</li>
+            <li>Algorithm/rule updates are opaque, hard to audit and reproduce.</li>
           </ul>
         </div>
       </div>
       <div class="column is-half">
-        <div class="card-like">
-          <h3>LLM-biased operators</h3>
-          <p><code>mate_llm_biased</code> and <code>mut_llm_guarded</code> keep the highest-scoring deep subtrees and mutate weaker ones.</p>
-          <ul class="compact-list">
-            <li>Select the <code>k_select=3</code> deepest slices by default.</li>
-            <li>Higher score lowers mutation chance; crossover prefers high-score slices.</li>
-            <li>Fallback: <code>mate_nonllm_subtree</code> for pure GP baselines.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="column is-half">
-        <div class="card-like">
-          <h3>Primitive sets</h3>
-          <p><code>add_basic_primitives</code> attaches arithmetic/logic primitives; extend with your domain-specific terminals and primitives.</p>
-          <ul class="compact-list">
-            <li>Works with <code>gp.PrimitiveSetTyped</code> out of the box.</li>
-            <li>Keep task-specific nodes in your own module (e.g., <code>your_task/pset.py</code>).</li>
-          </ul>
-        </div>
-      </div>
-      <div class="column is-half">
-        <div class="card-like">
-          <h3>Fitness shaping</h3>
-          <p><code>eval_with_llm_shaping</code> combines simulation cost with LLM importance (<code>shaped = cost * (1 - alpha * mean(score))</code>).</p>
-          <ul class="compact-list">
-            <li><code>DEFAULT_ALPHA=0.2</code> controls how much LLM guidance matters.</li>
-            <li><code>DEFAULT_K_SELECT=3</code> focuses on the deepest subtrees.</li>
-            <li>Stores <code>individual.sim_score</code> for later reporting.</li>
+        <div class="card-surface">
+          <h3>What is LLMGGP</h3>
+          <ul class="muted" style="line-height: 1.6; padding-left: 16px; margin-top: 8px;">
+            <li>An automated rule-design framework tailored for port scheduling.</li>
+            <li>Unified GP representation + LLM content-aware scoring to search scheduling rules.</li>
+            <li>Hides GP/DEAP internals; users only provide task description and cost metric.</li>
+            <li>Outputs interpretable expression rules ready to embed in simulation or control.</li>
           </ul>
         </div>
       </div>
@@ -252,102 +188,448 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="features">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Workflow</h2>
-    <div class="flow-box">
-      <span class="flow-num">1</span>Define your primitive set: start with <code>add_basic_primitives(pset)</code>, then add domain nodes.
+    <h2 class="title is-3 section-title">Key features</h2>
+    <div class="columns is-multiline">
+      <div class="column is-one-third">
+        <div class="card-surface">
+          <h3>Unified rule representation</h3>
+          <p class="muted">Typed GP expressions capture scheduling priority functions and adapt across CTTS / YCS / CRP.</p>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="card-surface">
+          <h3>LLM-guided search</h3>
+          <p class="muted">LLM scores sub-expressions to steer crossover, mutation, and fitness shaping for better efficiency and quality.</p>
+        </div>
+      </div>
+      <div class="column is-one-third">
+      <div class="card-surface">
+        <h3>Non-GP-friendly &amp; educational</h3>
+        <p class="muted">
+          High-level <code>gp_run_auto</code>: just provide state features, cost function, and task text; evolution is fully automated.
+          Along the way, interpretable trees and optional LLM comments on candidate rules help students and non-GP experts see how GP actually builds and refines heuristics.
+        </p>
+      </div>
     </div>
-    <div class="flow-box">
-      <span class="flow-num">2</span>Compose a domain prompt with <code>compose_system_prompt</code>.
+
+      <div class="column is-one-third">
+        <div class="card-surface">
+          <h3>Interpretable output</h3>
+          <p class="muted">Rules delivered as readable expressions and Python functions, ready for expert review, tweaks, and risk controls.</p>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="card-surface">
+          <h3>Cross-task reuse</h3>
+          <p class="muted">GP representation, LLM scoring, and operator control reuse across tasks; swap task description and simulator only.</p>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="card-surface">
+          <h3>No labeled data</h3>
+          <p class="muted">No historical labels required; relies on simulation feedback plus zero-shot LLM judgment for data-scarce settings.</p>
+        </div>
+      </div>
     </div>
-    <div class="flow-box">
-      <span class="flow-num">3</span>Wire scorer: <code>partial(llm_score_branch, system_prompt=prompt, client=build_llm_client())</code>.
-    </div>
-    <div class="flow-box">
-      <span class="flow-num">4</span>Run your DEAP loop with LLM-biased operators and shaped fitness.
-    </div>
-    <p class="muted" style="margin-top: 12px;">Set <code>LLM_HOST</code>/<code>LLM_API_KEY</code>/<code>LLM_MODEL</code> for live calls; offline returns 0.0 scores.</p>
   </div>
 </section>
 
-<section class="section">
+
+
+<section class="section" id="demo">
   <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Live demo</h2>
+    <div class="combo-card">
+      <div class="combo-grid">
+        <div class="subcard">
+          <h3>Run a search</h3>
+          <form id="demo-form">
+            <div class="field">
+              <label class="label">Task</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="task-select">
+                    <option value="ycs">YCS scheduling</option>
+                    <option value="crp">CRP relocation</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="field" id="scheme-field">
+              <label class="label">CRP scheme</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="scheme-select">
+                    <option value="RE">RE</option>
+                    <option value="REN">REN</option>
+                    <option value="UN">UN</option>
+                  </select>
+                </div>
+              </div>
+              <p class="help muted">Used only for CRP runs.</p>
+            </div>
+            <div class="field">
+              <label class="label">Prompt</label>
+              <div class="control">
+                <textarea class="textarea" id="prompt-input" rows="4" placeholder="Describe the heuristic goals or domain hints."></textarea>
+              </div>
+              <p class="help muted">Runs can take ~30 minutes. Keep this tab open to watch status.</p>
+              <p class="help muted">LLM credentials must be configured on the server to enable LLM scoring.</p>
+            </div>
+            <div class="field">
+              <button class="button is-link is-rounded" type="submit">Start run</button>
+              <button class="button is-light is-rounded" id="clear-job" type="button">Clear</button>
+            </div>
+          </form>
+        </div>
+        <div class="subcard">
+          <h3>Run status</h3>
+          <pre class="code-box" id="job-output">No job yet.</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="education">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Educational use: learning GP &amp; heuristics</h2>
+
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="card-surface">
+          <h3>Make GP concrete, not abstract</h3>
+          <p>
+            LLMGGP represents dispatching rules as explicit GP expression trees instead of black-box models.
+            By inspecting the best individuals and their key subtrees, users can see which state features enter
+            the decision and how they are combined into a priority function. This representation also makes GP
+            easier to explain in teaching or training contexts, because a “rule” corresponds to readable decision
+            logic rather than just a fitness number.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="card-surface">
+          <h3>Potential for use in teaching GP and heuristics</h3>
+          <p>
+            Although LLMGGP is primarily designed as a research framework for automatic heuristic design, its
+            combination of interpretable trees and LLM-based subtree scoring also lends itself naturally to
+            educational use. The same LLM interface can, in principle, be extended to generate short, natural-language
+            remarks about candidate subtrees (e.g., what behaviour they encourage, or when they may be risky), which
+            can be shown alongside trees in lectures or lab sessions.
+          </p>
+          <p>
+            In this way, LLMGGP could serve as a convenient sandbox for illustrating how GP constructs and refines
+            heuristics on realistic port scheduling problems, especially for students or practitioners who are new
+            to evolutionary computation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="how-get">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered">
+      <div class="column is-6">
+        <h2 id="how" class="title is-3 section-title">How it works</h2>
+        <div class="combo-card">
+          <div class="subcard">
+            <h3>Flow</h3>
+            <div class="flow">
+              <div class="num">1</div>
+              <div><strong>Define task &amp; features</strong><br><span class="muted">Provide task description, state feature functions, and performance metric (throughput, delay, relocation count).</span></div>
+            </div>
+            <div class="flow">
+              <div class="num">2</div>
+              <div><strong>Generate candidate rules (GP)</strong><br><span class="muted">GP encodes scheduling rules and produces many candidates via crossover/mutation.</span></div>
+            </div>
+            <div class="flow">
+              <div class="num">3</div>
+              <div><strong>LLM scores sub-expressions</strong><br><span class="muted">LLM rates subtrees for plausibility, discriminativeness, and simplicity.</span></div>
+            </div>
+            <div class="flow">
+              <div class="num">4</div>
+              <div><strong>Simulate &amp; iterate</strong><br><span class="muted">Combine simulation results with LLM scores for fitness shaping; iterate to high-quality policies.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-6">
+        <h2 id="get-started" class="title is-3 section-title">Get started with LLMGGP</h2>
+        <div class="combo-card">
+          <div class="subcard">
+            <h3>Minimal workflow (English)</h3>
+            <div class="code-box" style="margin-top: 8px;">
+<pre># 1) install
+pip install deap numpy
+
+# 2) describe task
+from llmgp import gp_run_auto
+
+def feat_state(s):
+    return float(s["load"])
+
+def cost_fn(pf):
+    return simulate(pf)  # lower is better
+
+# 3) run search
+res = gp_run_auto(
+    prompt="Port yard crane scheduling. Minimize delay.",
+    feature_fns=[feat_state],
+    cost_fn=cost_fn,
+)
+print(res.hof[0])  # best rule
+
+# 4) integrate
+best_pf = res.pset.compile(expr=res.hof[0], pset=res.pset)
+</pre>
+            </div>
+            <p class="muted" style="margin-top: 10px;">Optional: set <code>LLM_HOST</code>, <code>LLM_API_KEY</code>, <code>LLM_MODEL</code> to enable LLM scoring; otherwise runs offline.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="flow-framework">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Flow &amp; framework</h2>
+    <div class="combo-card" style="text-align:center;">
+      <div class="subcard" style="text-align:center;">
+        <h3 style="margin-bottom:10px;">Flow</h3>
+        <img src="/assets/Framework.png" alt="LLMGGP framework" style="max-width:100%; border-radius:12px; border:1px solid var(--line); box-shadow: var(--glow);">
+      </div>
+      <div class="subcard" style="text-align:center; margin-top:14px;">
+        <h3 style="margin-bottom:10px;">Framework</h3>
+        <div style="border:1px dashed var(--line); border-radius:12px; padding:18px;">
+          <span class="muted">GP generates candidates -> LLM scores subtrees -> Simulation feedback -> Iterative optimization</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="audience">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Who is it for</h2>
+    <div class="columns is-multiline">
+      <div class="column is-one-third">
+        <div class="card-surface">
+          <h3>Port ops &amp; dispatch experts</h3>
+          <p class="muted">Quickly try new rules in existing simulators without diving into GP/LLM internals.</p>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="card-surface">
+          <h3>Smart scheduling / OR researchers</h3>
+          <p class="muted">Study LLM + evolutionary search on real scheduling tasks; easy to reproduce and benchmark.</p>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="card-surface">
+          <h3>Digital twin &amp; automation teams</h3>
+          <p class="muted">Need explainable, auditable rules that embed directly into systems and reduce maintenance costs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="output">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Outputs &amp; integration</h2>
     <div class="columns">
-      <div class="column">
-        <h3 class="title is-4 section-title">LLM prompt (excerpt)</h3>
-        <div class="code-box">
-<pre>Role: Score GP subtrees in [0.0, 1.0] for your domain.
-Primitives: define in your pset (e.g., add/sub/mul/div/ifelse + domain features).
-Criteria: relevance, discriminativeness, simplicity, robustness, balance.</pre>
+      <div class="column is-half">
+        <div class="card-surface">
+          <h3>Outputs</h3>
+          <ul class="muted" style="line-height: 1.6; padding-left: 16px; margin-top: 8px;">
+            <li>Scheduling rules as Python functions / modules.</li>
+            <li>Expression structures (GP trees).</li>
+            <li>Key rule snippets with content-aware rationale (optional, from LLM scoring).</li>
+          </ul>
         </div>
       </div>
-      <div class="column">
-        <h3 class="title is-4 section-title">Example subtree</h3>
-        <div class="code-box">
-<pre># String sent to llm_score_branch
-tree = "add( RI(bay, seq), EMP(bay, seq) )"
-
-# Fitness shaping (alpha = 0.2)
-shaped = sim_cost * (1 - alpha * mean(scores))</pre>
+      <div class="column is-half">
+        <div class="card-surface">
+          <h3>Integration</h3>
+          <ul class="muted" style="line-height: 1.6; padding-left: 16px; margin-top: 8px;">
+            <li>Swap manual rules with LLMGGP-generated functions inside simulators.</li>
+            <li>Support offline policy evaluation and digital-twin comparisons.</li>
+            <li>Explainable outputs ease audit, tuning, and pre-deployment checks.</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section hero is-light" id="getting-started">
+<section class="section" id="papers">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Quick start</h2>
-    <div class="columns">
-      <div class="column">
-        <div class="card-like">
-          <h3>Steps</h3>
-          <ul class="compact-list">
-            <li>Install deps: <code>pip install deap numpy</code> (add tqdm/notebook if needed).</li>
-            <li>Optional: set <code>LLM_HOST</code>/<code>LLM_API_KEY</code>/<code>LLM_MODEL</code> to enable real scoring.</li>
-            <li>Build your pset + prompt, register scorer/ops in a DEAP toolbox.</li>
-            <li>Run your GP loop; log population, hall-of-fame, and scores as needed.</li>
-          </ul>
-          <p class="muted" style="margin-top: 10px;">Without credentials it falls back to pure GP for offline debugging.</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="card-like">
-          <h3>Key files</h3>
-          <ul class="compact-list">
-            <li><code>llmggp/api.py</code>: LLM client and scoring cache.</li>
-            <li><code>llmggp/operators.py</code>: LLM-biased crossover/mutation.</li>
-            <li><code>llmggp/fitness.py</code>: Fitness shaping.</li>
-            <li><code>llmggp/psets.py</code>: CRP primitive definitions.</li>
-            <li><code>util/util.py</code>: Data IO and seed helpers.</li>
-          </ul>
-        </div>
+    <h2 class="title is-3 section-title">Paper &amp; code</h2>
+    <div class="card-surface">
+      <p class="muted">Paper: Interactive LLM-Guided Genetic Programming for Port Scheduling (add authors/venue as needed)</p>
+      <div class="hero-cta" style="margin-top: 10px;">
+        <a class="button is-link is-rounded" href="Interactive_LLM_Human_Algorithm_Design_for_Port_Scheduling__Copy_ (11).pdf" target="_blank"><i class="fas fa-file-pdf"></i>&nbsp;Download PDF</a>
+        <a class="button is-light is-rounded" href="#code" target="_blank"><i class="fas fa-code-branch"></i>&nbsp;View repository</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title is-4">BibTeX</h2>
-<pre><code>@software{llmgp2025,
-  title        = {LLM-GGP: LLM-guided Genetic Programming Toolkit for CRP},
-  author       = {LLM-GGP Team},
-  year         = {2025},
-  note         = {Includes LLM scoring, biased operators, CRP primitives, and simulation pipeline},
-}</code></pre>
+<section class="section" id="contact">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Contact &amp; outlook</h2>
+    <div class="columns">
+      <div class="column is-half">
+        <div class="card-surface">
+          <h3>Contact</h3>
+          <p class="muted">Email / team homepage (add real links here).</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="card-surface">
+          <h3>Future plans</h3>
+          <ul class="muted" style="line-height: 1.6; padding-left: 16px; margin-top: 8px;">
+            <li>Extend to quay crane scheduling, berth allocation, and more.</li>
+            <li>Validate with real port data connections.</li>
+            <li>Incorporate expert feedback to boost usability and acceptance.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
-      <p>Codebase: <code>llmggp/</code> · default runner <code>crp/run_crp.py</code> · data from <code>crp/clean</code> and <code>crp/validation</code>.</p>
-      <p class="is-size-7">Built on Bulma; adapt it to your experiment notes or demo needs.</p>
+      <p>LLMGGP: Automated, interpretable rule design for port scheduling with GP under the hood.</p>
+      <p class="is-size-7">Colors and visuals follow the current theme; ready for demos and docs.</p>
     </div>
   </div>
 </footer>
+
+<script>
+(() => {
+  const form = document.getElementById("demo-form");
+  if (!form) {
+    return;
+  }
+  const taskSelect = document.getElementById("task-select");
+  const schemeField = document.getElementById("scheme-field");
+  const schemeSelect = document.getElementById("scheme-select");
+  const promptInput = document.getElementById("prompt-input");
+  const output = document.getElementById("job-output");
+  const clearJob = document.getElementById("clear-job");
+  let pollTimer = null;
+  let activeJob = null;
+
+  const setOutput = (text) => {
+    output.textContent = text;
+  };
+
+  const updateSchemeVisibility = () => {
+    const show = taskSelect.value === "crp";
+    schemeField.style.display = show ? "" : "none";
+    schemeSelect.disabled = !show;
+  };
+
+  const stopPolling = () => {
+    if (pollTimer) {
+      clearTimeout(pollTimer);
+      pollTimer = null;
+    }
+  };
+
+  const formatStatus = (data) => {
+    const lines = [
+      `Job: ${data.id}`,
+      `Task: ${data.task}`,
+      `Status: ${data.status}`,
+      `Created: ${data.created_at || "-"}`,
+      `Started: ${data.started_at || "-"}`,
+      `Finished: ${data.finished_at || "-"}`,
+    ];
+    if (data.result) {
+      lines.push(`Best expr: ${data.result.best_expr}`);
+      lines.push(`Sim score: ${data.result.sim_score}`);
+      lines.push(`Fitness: ${data.result.fitness}`);
+    }
+    if (data.error) {
+      lines.push(`Error: ${data.error}`);
+    }
+    return lines.join("\n");
+  };
+
+  const pollJob = async (jobId) => {
+    try {
+      const resp = await fetch(`/api/jobs/${jobId}`);
+      if (!resp.ok) {
+        throw new Error(`Status fetch failed: ${resp.status}`);
+      }
+      const data = await resp.json();
+      setOutput(formatStatus(data));
+      if (data.status === "completed" || data.status === "failed") {
+        stopPolling();
+        return;
+      }
+      pollTimer = setTimeout(() => pollJob(jobId), 15000);
+    } catch (err) {
+      setOutput(`Polling error: ${err.message || err}`);
+      pollTimer = setTimeout(() => pollJob(jobId), 20000);
+    }
+  };
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const prompt = promptInput.value.trim();
+    if (!prompt) {
+      setOutput("Prompt is required.");
+      return;
+    }
+    const payload = {
+      task: taskSelect.value,
+      prompt,
+      scheme: schemeSelect.value,
+    };
+    setOutput("Submitting job...");
+    stopPolling();
+    try {
+      const resp = await fetch("/api/jobs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new Error(text || `Submit failed: ${resp.status}`);
+      }
+      const data = await resp.json();
+      activeJob = data.job_id;
+      setOutput(`Job submitted: ${activeJob}\nStatus: queued`);
+      pollJob(activeJob);
+    } catch (err) {
+      setOutput(`Submit error: ${err.message || err}`);
+    }
+  });
+
+  clearJob.addEventListener("click", () => {
+    activeJob = null;
+    stopPolling();
+    setOutput("No job yet.");
+  });
+
+  updateSchemeVisibility();
+  taskSelect.addEventListener("change", updateSchemeVisibility);
+})();
+</script>
 
 </body>
 </html>
