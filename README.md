@@ -1,4 +1,4 @@
-# llmgp
+# TLAGP
 
 LLM-guided genetic programming utilities with beginner-friendly entry points.
 
