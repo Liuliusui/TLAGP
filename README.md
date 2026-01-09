@@ -1,6 +1,6 @@
 # tlagp
 
-tlagp: LLM-guided genetic programming utilities with beginner-friendly entry points.
+LLM-guided genetic programming utilities with beginner-friendly entry points.
 
 ## Install (dev)
 ```
