@@ -13,8 +13,8 @@ CRP standalone - Colab 手把手教程
 
 # ========== 1) 克隆仓库 ==========
 # 在 Colab 里取消下两行的注释运行
-# !rm -rf llmgp
-# !git clone https://github.com/Liuliusui/llmgp.git
+# !rm -rf tlagp
+# !git clone https://github.com/Liuliusui/tlagp.git
 
 from __future__ import annotations
 import os
@@ -27,7 +27,7 @@ import numpy as np
 
 # ========== 2) 加载路径 ==========
 # 如果你改了克隆路径，请同步修改 ROOT
-ROOT = Path("/content/llmgp") if Path("/content/llmgp").exists() else Path(".").resolve()
+ROOT = Path("/content/tlagp") if Path("/content/tlagp").exists() else Path(".").resolve()
 sys.path.append(str(ROOT))
 
 
@@ -39,7 +39,7 @@ from crp.bay import Bay
 from crp.read_data import load_instance_from_dat
 from crp.prompt import CRP_SYSTEM_PROMPT
 from crp.simulator_standalone import run_instance  # 已实现的单实例模拟逻辑
-from llmgp import FunctionalSimulator, SimulatorConfig
+from tlagp import FunctionalSimulator, SimulatorConfig
 
 # ========== 4) 加载 CRP 数据 (.dat) ==========
 data_dir = ROOT / "crp" / "clean"

@@ -1,6 +1,6 @@
-# llmgp
+# tlagp
 
-LLM-guided genetic programming utilities with beginner-friendly entry points.
+tlagp: LLM-guided genetic programming utilities with beginner-friendly entry points.
 
 ## Install (dev)
 ```
@@ -12,7 +12,7 @@ Requires Python 3.9+, `deap`, `numpy`.
 
 ## Quickstart (single-input tasks)
 ```python
-from llmgp import quick_start
+from tlagp import quick_start
 
 class State(dict): ...
 
@@ -43,7 +43,7 @@ Full sample: `examples/basic_regression.py`.
 ## Generic runner (multi-arg psets)
 Already have a custom `pset` and `cost_fn`? Let `gp_run_with_pset` wire DEAP for you:
 ```python
-from llmgp import gp_run_with_pset
+from tlagp import gp_run_with_pset
 res = gp_run_with_pset(pset=my_pset, cost_fn=my_cost_fn, prompt="task context")
 ```
 
@@ -57,7 +57,7 @@ Steps:
 4) (Optional) `extra_primitives` / `extra_terminals` → add custom ops/constants.
 5) Configure and run:
 ```python
-from llmgp import SimulatorRunner, SimulatorConfig
+from tlagp import SimulatorRunner, SimulatorConfig
 
 def data_loader():
     # Example: dummy states for type inference

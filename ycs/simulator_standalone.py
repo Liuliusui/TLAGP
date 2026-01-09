@@ -2,7 +2,7 @@
 """
 Standalone YCS simulator runner (no dependency on ycs/gp_simulation.py).
 
-It wires the YCS simulation logic directly into FunctionalSimulator from llmgp:
+It wires the YCS simulation logic directly into FunctionalSimulator from tlagp:
   - feature_fns expect a dict of terminal values (r_i, p_i, s_ji, d_i, w_i, t, n, bar_r, bar_p, bar_s, bar_d, bar_w)
   - cost_fn runs the simulation and returns total weighted tardiness (lower is better)
 
@@ -23,7 +23,7 @@ SRC = os.path.join(ROOT, "src")
 for p in (ROOT, SRC):
     if p not in sys.path:
         sys.path.insert(0, p)
-from llmgp import SimulatorRunner, SimulatorConfig
+from tlagp import FunctionalSimulator, SimulatorConfig
 from ycs.instance_generator_loader import read_instances_from_folder, read_instances_from_folder_old
 
 # Set these via environment in real runs; keep blanks to avoid hardcoding secrets.
@@ -274,7 +274,7 @@ def build_ycs_simulator(instances=None, lookahead="dyn", data_dir=None, prompt: 
         cxpb=0.5,
         mutpb=0.3,
     )
-    return SimulatorRunner(
+    return FunctionalSimulator(
         data_loader=data_loader,
         feature_fns=FEATURES,
         cost_fn=cost_fn,

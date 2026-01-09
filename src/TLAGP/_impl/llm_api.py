@@ -57,7 +57,7 @@ class HttpsApi:
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
-            "User-Agent": "llmgp-lab/0.1",
+            "User-Agent": "tlagp-lab/0.1",
         }
         conn = http.client.HTTPSConnection(self.host, timeout=self.timeout)
         try:
@@ -140,5 +140,4 @@ class LLMClient:
             return self.chat(messages)
         except LLMTransportError:
             return fallback
-
 

@@ -18,7 +18,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import List, Optional, Sequence, Tuple
 
-from llmgp import FunctionalSimulator, SimulatorConfig
+from tlagp import FunctionalSimulator, SimulatorConfig
 from crp.bay import Bay
 from crp.common import TRUCK_POS, T_STEP, T_PICKUP
 from crp.read_data import load_instance_from_dat

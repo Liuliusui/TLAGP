@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from deap import gp
 
-from llmgp import EasyRunResult, quick_start
+from tlagp import EasyRunResult, quick_start
 
 
 class DummyState(dict):

@@ -5,7 +5,7 @@ import random
 from deap import gp
 
 from crp.bay import Bay
-from llmgp import add_basic_primitives
+from tlagp import add_basic_primitives
 
 
 def build_crp_pset():
