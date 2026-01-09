@@ -15,6 +15,14 @@ from .simulate import (
 )
 # Optional LLM helpers (environment-driven; safe to ignore)
 from .llm import build_llm_client, compose_system_prompt, llm_score_branch
+from .gp import add_basic_primitives
+from .operators import (
+    best_slice_by_llm,
+    mate_llm_biased,
+    mate_nonllm_subtree,
+    mut_llm_guarded,
+    eval_with_llm_shaping,
+)
 
 # Preferred descriptive names (aliases)
 GpAutoResult = EasyRunResult
@@ -34,6 +42,12 @@ __all__ = [
     "make_llm_client",
     "make_llm_prompt",
     "llm_score_branch",
+    "add_basic_primitives",
+    "best_slice_by_llm",
+    "mate_llm_biased",
+    "mate_nonllm_subtree",
+    "mut_llm_guarded",
+    "eval_with_llm_shaping",
     # Legacy/compat names
     "EasyRunResult",
     "run_gp_simple",

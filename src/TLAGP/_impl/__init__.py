@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-LLM-guided GP reusable toolkit: LLM scoring, GP tree helpers, biased operators,
-and fitness shaping. Domain-specific primitive sets/prompts live in task modules.
+Legacy compatibility shim. New code should import from tlagp.core/operators/gp/runners.
 """
-from .api import (
+from ..core import (
     DEFAULT_ALPHA,
     DEFAULT_K_SELECT,
     SYSTEM_PROMPT,
@@ -11,11 +10,9 @@ from .api import (
     compose_system_prompt,
     llm_score_branch,
 )
-from .fitness import eval_with_llm_shaping
-from .operators import best_slice_by_llm, mate_llm_biased, mate_nonllm_subtree, mut_llm_guarded
-from .pset_base import add_basic_primitives
-from .quickstart import EasyRunResult, quick_start
-from .trees import extract_subtree_indices_and_trees, extract_subtrees, pick_deep_k_slices, swap_slices_inplace
+from ..operators import best_slice_by_llm, eval_with_llm_shaping, mate_llm_biased, mate_nonllm_subtree, mut_llm_guarded
+from ..gp import add_basic_primitives, extract_subtree_indices_and_trees, extract_subtrees, pick_deep_k_slices, swap_slices_inplace
+from ..runners import EasyRunResult, quick_start
 
 __all__ = [
     "DEFAULT_ALPHA",

@@ -5,8 +5,8 @@ from typing import Callable, Any
 import numpy as np
 from deap import gp
 
-from .api import DEFAULT_ALPHA, DEFAULT_K_SELECT, llm_score_branch
-from .trees import extract_subtrees
+from ..core import DEFAULT_ALPHA, DEFAULT_K_SELECT, llm_score_branch
+from ..gp import extract_subtrees
 
 
 def eval_with_llm_shaping(

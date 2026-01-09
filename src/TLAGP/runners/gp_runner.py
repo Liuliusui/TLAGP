@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 """Generic GP runner that hides DEAP wiring for multi-arg psets."""
 import random
-from dataclasses import dataclass
 from functools import partial
 from multiprocessing.dummy import Pool as ThreadPool
 from typing import Any, Callable, Optional
 
-from deap import algorithms, base, creator, gp, tools
+from deap import base, creator, gp, tools
 
-from .api import DEFAULT_ALPHA, DEFAULT_K_SELECT, build_llm_client, compose_system_prompt, llm_score_branch
+from ..algorithms import ea_simple
+from ..core import DEFAULT_ALPHA, DEFAULT_K_SELECT, build_llm_client, compose_system_prompt, llm_score_branch
+from ..operators import eval_with_llm_shaping, mate_llm_biased, mut_llm_guarded
 from .quickstart import EasyRunResult
-from .operators import mate_llm_biased, mut_llm_guarded
-from .fitness import eval_with_llm_shaping
 
 
 def _ensure_creator(name: str, base_cls, **kwargs):
@@ -72,7 +71,7 @@ def run_gp_simple(
     hof = tools.HallOfFame(5)
     with ThreadPool(processes=n_threads) as pool:
         toolbox.register("map", pool.map)
-        pop, log = algorithms.eaSimple(pop, toolbox, cxpb=cxpb, mutpb=mutpb, ngen=ngen, stats=None, halloffame=hof, verbose=True)
+        pop, log = ea_simple(pop, toolbox, cxpb=cxpb, mutpb=mutpb, ngen=ngen, stats=None, halloffame=hof, verbose=True)
 
     return EasyRunResult(pop=pop, log=log, hof=hof, pset=pset, scorer=scorer)
 

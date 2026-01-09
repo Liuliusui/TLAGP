@@ -5,8 +5,8 @@ from typing import Callable
 
 from deap import gp
 
-from .api import DEFAULT_K_SELECT, llm_score_branch
-from .trees import extract_subtree_indices_and_trees, pick_deep_k_slices, swap_slices_inplace
+from ..core import DEFAULT_K_SELECT, llm_score_branch
+from ..gp import extract_subtree_indices_and_trees, pick_deep_k_slices, swap_slices_inplace
 
 
 def best_slice_by_llm(ind, k_select: int = DEFAULT_K_SELECT, scorer: Callable[[str], float] = llm_score_branch):

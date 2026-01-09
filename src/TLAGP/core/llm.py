@@ -6,7 +6,7 @@ import traceback
 from functools import lru_cache
 from typing import Optional
 
-from .llm_api import LLMClient
+from ..utils.llm_api import LLMClient
 
 DEFAULT_ALPHA = 0.2
 DEFAULT_K_SELECT = 3

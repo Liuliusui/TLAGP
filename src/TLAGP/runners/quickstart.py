@@ -6,14 +6,14 @@ import random
 from functools import partial
 from multiprocessing.dummy import Pool as ThreadPool
 import time
-from typing import Any, Callable, Iterable, Optional, Sequence, Tuple, Union
+from typing import Any, Callable, Optional, Sequence, Tuple, Union
 
-from deap import algorithms, base, creator, gp, tools
+from deap import base, creator, gp, tools
 
-from .api import DEFAULT_ALPHA, DEFAULT_K_SELECT, build_llm_client, compose_system_prompt, llm_score_branch
-from .fitness import eval_with_llm_shaping
-from .operators import mate_llm_biased, mut_llm_guarded
-from .pset_base import add_basic_primitives
+from ..algorithms import ea_simple
+from ..core import DEFAULT_ALPHA, DEFAULT_K_SELECT, build_llm_client, compose_system_prompt, llm_score_branch
+from ..gp import add_basic_primitives
+from ..operators import eval_with_llm_shaping, mate_llm_biased, mut_llm_guarded
 
 
 @dataclass
@@ -163,7 +163,7 @@ def quick_start(
     stats.register("time", lambda vs, st=start_time: time.time() - st)
     with ThreadPool(processes=n_threads) as pool:
         toolbox.register("map", pool.map)
-        pop, log = algorithms.eaSimple(
+        pop, log = ea_simple(
             pop,
             toolbox,
             cxpb=cxpb,
